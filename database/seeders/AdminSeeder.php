@@ -28,7 +28,7 @@ class AdminSeeder extends Seeder
             ]
         ];
         foreach ($admins as $admin) {
-            Admin::created($admin);
+            Admin::create($admin);
         }
     }
 }
