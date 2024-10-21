@@ -17,13 +17,13 @@ class AdminSeeder extends Seeder
             [
                 'username' => 'admin1',
                 'password' => bcrypt('password'),
-                'nama_admin' => 'admiistrator 1',
+                'nama_admin' => 'administrator 1',
                 'foto' => null,
             ],
             [
                 'username' => 'admin2',
                 'password' => bcrypt('password'),
-                'nama_admin' => 'admiistrator 2',
+                'nama_admin' => 'administrator 2',
                 'foto' => null,
             ]
         ];
