@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\dudiController;
-use App\Http\Controllers\Admin\PembimbingiController;
+use App\Http\Controllers\Admin\PembimbingController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\GuruLoginController;
@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::middleware(['guest'])->group(function ()  {
+Route::middleware(['guest'])->group(function () {
     Route::get('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
     Route::post('/admin/login', [AdminLoginController::class, 'auth'])->name('admin.auth');
 
@@ -42,17 +42,27 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/dudi/edit/{id}', [DudiController::class, 'edit'])->name('admin.dudi.edit');
     Route::put('admin/dudi/edit/{id}', [DudiController::class, 'update'])->name('admin.dudi.update');
 
-    Route::get('admin/pembimbing', [PembimbingiController::class, 'pembimbing'])->name('admin.pembimbing');
-    Route::get('admin/pembimbing/tambah', [PembimbingiController::class, 'create'])->name('admin.pembimbing.create');
-    Route::post('admin/pembimbing/tambah', [PembimbingiController::class, 'store'])->name('admin.pembimbing.store');
-    Route::get('admin/pembimbing/edit/{id}', [PembimbingiController::class, 'edit'])->name('admin.pembimbing.edit');
-    Route::put('admin/pembimbing/edit/{id}', [PembimbingiController::class, 'update'])->name('admin.pembimbing.update');
-    Route::get('admin/pembimbing/delete/{id}', [PembimbingiController::class, 'delete'])->name('admin.pembimbing.delete');
-    
+    Route::get('admin/pembimbing', [PembimbingController::class, 'pembimbing'])->name('admin.pembimbing');
+    Route::get('admin/pembimbing/tambah', [PembimbingController::class, 'create'])->name('admin.pembimbing.create');
+    Route::post('admin/pembimbing/tambah', [PembimbingController::class, 'store'])->name('admin.pembimbing.store');
+    Route::get('admin/pembimbing/edit/{id}', [PembimbingController::class, 'edit'])->name('admin.pembimbing.edit');
+    Route::put('admin/pembimbing/edit/{id}', [PembimbingController::class, 'update'])->name('admin.pembimbing.update');
+    Route::get('admin/pembimbing/delete/{id}', [PembimbingController::class, 'delete'])->name('admin.pembimbing.delete');
+
     Route::get('admin/pembimbing/{id}/siswa', [SiswaController::class, 'siswa'])->name('admin.pembimbing.siswa');
     Route::get('admin/pembimbing/{id}/siswa/tambah', [SiswaController::class, 'create'])->name('admin.pembimbing.siswa.create');
     Route::post('admin/pembimbing/{id}/siswa/tambah', [SiswaController::class, 'store'])->name('admin.pembimbing.siswa.store');
     Route::get('admin/pembimbing/delete/{id}/siswa/delete/{id_siswa}', [SiswaController::class, 'delete'])->name('admin.pembimbing.siswa.delete');
     Route::get('admin/pembimbing/edit/{id}/siswa/edit/{id_siswa}', [SiswaController::class, 'edit'])->name('admin.pembimbing.siswa.edit');
     Route::put('admin/pembimbing/edit/{id}/siswa/edit/{id_siswa}', [SiswaController::class, 'update'])->name('admin.pembimbing.siswa.update');
+});
+
+Route::middleware('guru')->group(function () {
+    Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/guru/logout', [GuruController::class, 'logout'])->name('guru.logout');
+
+    Route::get('/guru/pembimbing', [PembimbingController::class, 'pembimbingGuru'])->name('guru.pembimbing');
+    Route::get('/guru/pembimbing/{id}/siswa', [SiswaController::class, 'siswaGuru'])->name('guru.pembimbing.siswa');
+    Route::get('/guru/profile', [GuruController::class, 'profile'])->name('guru.profile');
+    Route::put('/guru/profile/update', [GuruController::class, 'updateGuru'])->name('guru.profile.update');
 });
