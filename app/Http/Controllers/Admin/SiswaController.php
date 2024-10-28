@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\kegiatan;
 use App\Models\Admin\Pembimbing;
 use App\Models\Admin\Siswa;
 use Illuminate\Http\Request;
@@ -147,5 +148,22 @@ class SiswaController extends Controller
         $siswas = Siswa::where('id_pembimbing', $id)->get();
         $siswa = Siswa::where('id_pembimbing', $id)->first();
         return view('guru.siswa', compact('siswas', 'siswa', 'id')); 
+    }
+
+    public function dashboard()
+    {
+        return view('siswa.dashboard');
+    }
+
+    public function kegiatan()
+    {
+        $id_siswa = Auth::guard('siswa')->user()->id_siswa;
+        $kegiatans = kegiatan::where('id_siswa', $id_siswa)->get();
+        return view('siswa.kegiatan', compact('kegiatans'));    
+    }
+
+    public function createKegiatan()
+    {
+        return view('siswa.tambah_kegiatan');
     }
 }

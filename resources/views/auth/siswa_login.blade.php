@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Juhar PKL - Admin Login</title>
+    <title>Juhar PKL - Siswa Login</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -47,16 +47,16 @@
                         <div class="alert alert-danger">{{ $errors->first('login_error') }}</div>
                         @endif
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="{{ route('admin.login') }}" class="">
+                            <a href="{{ route('siswa.login') }}" class="">
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>JUHAR</h3>
                             </a>
                             <h3>Sign In</h3>
                         </div>
-                        <form action="{{ route('admin.auth') }}" method="post">
+                        <form action="{{ route('siswa.auth') }}" method="post">
                             @csrf
                             <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" name="username" placeholder="name@example.com" value="{{ old('username') }}">
-                            <label for="floatingInput">Username</label>
+                            <input type="text" class="form-control" id="floatingInput" name="nisn" placeholder="name@example.com" value="{{ old('nisn') }}">
+                            <label for="floatingInput">NISN</label>
                             <div class="text-danger">
                             @error ('username')
                             {{ $message}}

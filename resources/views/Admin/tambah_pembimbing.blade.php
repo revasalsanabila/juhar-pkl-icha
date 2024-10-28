@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Nama DUDI</label>
+                    <label for="id_dudi" class="form-label">Nama DUDI</label>
                     <select name="id_dudi" id="id_dudi" class="form-select">
                         <option value="">-Pilih-</option>
                     @foreach($dudis as $dudi)

@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\PembimbingController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\GuruLoginController;
+use App\Http\Controllers\Auth\SiswaLoginController;
+use App\Http\Middleware\Siswa as MiddlewareSiswa;
 use App\Models\Admin\Dudi;
 use App\Models\Admin\Siswa;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,9 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/guru/login', [GuruLoginController::class, 'login'])->name('guru.login');
     Route::post('/guru/login', [GuruLoginController::class, 'auth'])->name('guru.auth');
+
+    Route::get('/siswa/login', [SiswaLoginController::class, 'login'])->name('siswa.login');
+    Route::post('/siswa/login', [SiswaLoginController::class, 'auth'])->name('siswa.auth');
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -68,4 +73,11 @@ Route::middleware('guru')->group(function () {
     Route::put('/guru/profile/update', [GuruController::class, 'updateGuru '])->name('guru.profile.update');
     Route::get('/guru/pembimbing/{id}/siswa/{id_siswa}/kegiatan', [KegiatanController::class, 'kegiatan'])->name('guru.pembimbing.siswa.kegiatan');
     Route::get('/guru/pembimbing/{id}/siswa/{id_siswa}/kegiatan/detail/{id_kegiatan}', [KegiatanController::class, 'detailKegiatan'])->name('guru.pembimbing.siswa.kegiatan.detail');
+});
+
+Route::middleware(['siswa'])->group(function () {
+    Route::get('siswa/dashboard', [SiswaController::class, 'dashboard'])->name('siswa.dashboard');
+    Route::get('siswa/kegiatan', [SiswaController::class, 'kegiatan'])->name('siswa.kegiatan');
+    Route::get('siswa/kegiatan/tambah', [SiswaController::class, 'createKegiatan'])->name('siswa.createKegiatan');
+    Route::post('siswa/kegiatan/tambah', [SiswaController::class, 'storeKegiatan'])->name('siswa.storeKegiatan');
 });
