@@ -29,10 +29,10 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $kegiatan->tanggal_kegiatan }}</td>
                             <td>{{ $kegiatan->nama_kegiatan }}</td>
-                            
                             <td>
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Hapus</a>
+                                <a href="{{ route('siswa.kegiatan.edit', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('siswa.kegiatan.delete', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin anda ingin menghapus data?')">Hapus</a>
+                                <a href="{{ route('siswa.kegiatan.detail', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}" class="btn btn-info btn-sm">Detail</a>
                             </td>
                         </tr>
                         @endforeach
