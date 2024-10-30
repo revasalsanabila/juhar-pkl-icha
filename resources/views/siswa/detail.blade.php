@@ -4,8 +4,12 @@
 
 
 @section('content')
+@if ($errors->has('access'))
+    <div class="alert alert-danger">
+    {{ $errors->first('access') }}</div>
+@endif
 <div class="row bg-light rounded align-items-center mx-0">
-    <div class="col-md-6 p-3r">
+    <div class="col-md-6 p-3">
         <table>
             <tr>
                 <td width="100">Nama Siswa</td>

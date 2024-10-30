@@ -4,6 +4,10 @@
 
 
 @section('content')
+@if ($errors->has('access'))
+    <div class="alert alert-danger">
+    {{ $errors->first('access') }}</div>
+@endif
 <div class="row g-4">
     <div class="col-12">
         <div class="bg-light rounded h-100 p-4">
@@ -22,7 +26,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
-                    <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan" value="{{ old('ringkasan_kegiatan', $kegiatan->ringkasan_kegiatan) }}">
+                    <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan" value="{{ old('ringkasan_kegiatan', $kegiatan->nama_kegiatan) }}">
                     <div class="text-danger">
                         @error('nama_kegiatan')
                         {{ $message }}
@@ -46,6 +50,7 @@
                         {{ $message }}
                         @enderror
                     </div>
+                </div>
                 <button type="submit" class="btn btn-info">Simpan</button>
             </form>
         </div>

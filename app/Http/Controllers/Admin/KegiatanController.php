@@ -30,7 +30,7 @@ class KegiatanController extends Controller
         $kegiatan = kegiatan::where('id_siswa', $id_siswa)->first();
         $id_pembimbing = $id;
 
-        return view('guru.kegiatan', compact('id_pembimbing','kegiatans','kegiatan'));
+        return view('guru.kegiatan', compact('id_pembimbing', 'id_siswa', 'kegiatans', 'kegiatan'));
     }
 
     public function detailKegiatan($id, $id_siswa, $id_kegiatan)
@@ -47,12 +47,12 @@ class KegiatanController extends Controller
         $pembimbing = Pembimbing::find($id);
         if (!$pembimbing || $pembimbing->id_guru !== $loginGuru) {
             return back()->withErrors(['access' => 'Akses anda di tolak, siswa ini tidak dibimbing oleh anda']);
-        } 
-    
+        }
+
 
         $kegiatan = kegiatan::where('id_siswa', $id_siswa)
-                            ->where('id_kegiatan', $id_kegiatan)
-                            ->first();
+            ->where('id_kegiatan', $id_kegiatan)
+            ->first();
 
         if (!$kegiatan) {
             return back()->withErrors(['access' => 'Kegiatan tidak tersedia']);
@@ -68,16 +68,33 @@ class KegiatanController extends Controller
             'tanggal_akhir' => 'required|date|after_or_equal:tanggal_awal',
         ]);
 
-        $tanggalAwal =$request->input('tanggal_awal');
-        $tanggalAkhir =$request->input('tanggal_akhir');
+        $tanggalAwal = $request->input('tanggal_awal');
+        $tanggalAkhir = $request->input('tanggal_akhir');
+
+        $loginGuru = Auth::guard('guru')->user()->id_guru;
+        $siswa = Siswa::find($id_siswa);
+
+        if (!$siswa || !$siswa->id_pembimbing) {
+            return back()->withErrors(['access' => 'Siswa tidak ditemukan atau tidak memiliki pembimbing']);
+        }
+        if ($siswa->id_pembimbing != $id) {
+            return back()->withErrors(['access' => 'Pembimbing tidak sesuai']);
+        }
+        $pembimbing = Pembimbing::find($id);
+        if (!$pembimbing || $pembimbing->id_guru !== $loginGuru) {
+            return back()->withErrors(['access' => 'Akses anda di tolak, siswa ini tidak dibimbing oleh anda']);
+        }
 
         $kegiatans = kegiatan::where('id_siswa', $id_siswa)
             ->whereBetween('tanggal_kegiatan', [$tanggalAwal, $tanggalAkhir])
             ->get();
 
+        $kegiatan = kegiatan::where('id_siswa', $id_siswa)
+            ->whereBetween('tanggal_kegiatan', [$tanggalAwal, $tanggalAkhir])
+            ->first();
+
         $id_pembimbing = $id;
 
-        return view('guru.kegiatan', compact('kegiatan', 'id_pembimbing', 'id_siswa', 'tanggalAwal', 'tanggalAkhir'));
-
+        return view('guru.kegiatan', compact('kegiatans', 'kegiatan', 'id_pembimbing', 'id_siswa', 'tanggalAwal', 'tanggalAkhir'));
     }
 }

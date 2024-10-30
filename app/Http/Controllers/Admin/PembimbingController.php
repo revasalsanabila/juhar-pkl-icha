@@ -62,6 +62,9 @@ class PembimbingController extends Controller
     public function edit(string $id)
     {
         $pembimbing = Pembimbing::find($id);
+        if (!$pembimbing) {
+            return back();
+        }
         $gurus = Guru::with('pembimbingGuru')->get();
         $dudis = Dudi::with('pembimbingDudi')->get();
         return view('admin.edit_pembimbing', compact('pembimbing', 'gurus', 'dudis'));

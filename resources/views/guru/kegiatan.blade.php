@@ -3,6 +3,10 @@
 @section('title', 'kegiatan')
 
 @section('content')
+@if ($errors->has('access'))
+    <div class="alert alert-danger">
+    {{ $errors->first('access') }}</div>
+@endif
 <div class="row g-4">
     <div class="col-12">
         <div class="bg-light rounded h-100 p-4">
@@ -27,9 +31,9 @@
             @endif
             <h6 class="mb-4">Data kegiatan</h6>
             <div class="table-responsive">
-                <form action="{{ route('guru.pembimbing.siswa.cari', ['id' => $id_pembimbing, 'id_siswa' =>$id_siswa]) }}" method="GET" class="row g-3">
+                <form action="{{ route('guru.pembimbing.siswa.kegiatan.cari', ['id' => $id_pembimbing, 'id_siswa' =>$id_siswa]) }}" method="GET" class="row g-3">
                     <div class="col-auto">
-                        <label for="tanggal_awal" class="form-control">Tanggal Awal</label>
+                        <label for="tanggal_awal" class="form-label">Tanggal Awal</label>
                         <input type="date" class="form-control" name="tanggal_awal" id="tanggal_awal" value="{{ $tanggalAwal ?? '' }}">
                         <div class="text-danger">
                             @error('tanggal_awal')
@@ -38,7 +42,7 @@
                         </div>
                     </div>
                     <div class="col-auto">
-                        <label for="tanggal_akhir" class="form-control">Tanggal Akhir</label>
+                        <label for="tanggal_akhir" class="form-label">Tanggal Akhir</label>
                         <input type="date" class="form-control" name="tanggal_akhir" id="tanggal_akhir" value="{{ $tanggalakhir ?? '' }}">
                         <div class="text-danger">
                             @error('tanggal_akhir')
